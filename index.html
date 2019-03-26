@@ -9,70 +9,90 @@
 </head>
 <body>
 <div>
-<nav class="navbar is-primary" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand">
-        <a class="navbar-item" href="/">
-            Образ города
-        </a>
-
-        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
-           data-target="navbarBasicExample">
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-        </a>
-    </div>
-
-    <div id="navbarBasicExample" class="navbar-menu">
-        <div class="navbar-start">
-            <a class="navbar-item" href="index.html">
-                Главная
-            </a>
-            <a class="navbar-item" href="statistics.html">
-                Статистика
-            </a>
-        </div>
-    </div>
-</nav>
-<section class="hero is-primary is-medium is-fullheight-with-navbar" id="first_cont">
-    <!-- Hero head: will stick at the top -->
-
-    <!-- Hero content: will be in the middle -->
-    <div class="hero-body">
-        <div class="container has-text-centered">
-            <h1 class="title" class="title">
+    <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/">
                 Образ города
-            </h1>
-            <h2 class="subtitle">
-                Анализ эмоционального состояния в городе
-            </h2>
+            </a>
+
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
+               data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
         </div>
+
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" href="index.html">
+                    Главная
+                </a>
+                <a class="navbar-item" href="statistics.html">
+                    Статистика
+                </a>
+            </div>
+        </div>
+    </nav>
+    <section class="hero is-primary is-medium is-fullheight-with-navbar" id="first_cont">
+        <!-- Hero head: will stick at the top -->
+
+        <!-- Hero content: will be in the middle -->
+        <div class="hero-body">
+            <div class="container has-text-centered">
+                <h1 class="title" class="title">
+                    Образ города
+                </h1>
+                <h2 class="subtitle">
+                    Анализ эмоционального состояния в городе
+                </h2>
+            </div>
+        </div>
+    </section>
+    <div class="container" style="margin: 20px">
+        <h1 class="title has-text-centered">Цель</h1><p style="text-indent: 1.5em;">Создать веб-платформу, с помощью которой можно отслеживать настроение жителей города
+        путем семантического анализа текста, хэштегов и эмоциональной окраски фотографии в социальных сетях.
+        Методика работы</p>
+        <h1 class="title has-text-centered" style="margin: 20px">Схема работы</h1>
+        <ul class="has-text-centered">
+            <li>Парсинг данных из разных источников</li>
+            <li>Обработка данных</li>
+            <li>Проведение анализа</li>
+        </ul>
+            <h1 class="title has-text-centered" style="margin: 20px">Парсинг данных</h1>
+            <p style="text-indent: 1.5em;">Это первый этап. На этом этапе мы собираем данные из социальных сетей для анализа. В ходе разработки наша
+                команда выбрала для начала соц. сеть Instagram. Для работы с социальной сетью была выбрана библиотека
+                Instaloader (https://instaloader.github.io/). </p>
+            <p style="text-indent: 1.5em;">Изначально, чтобы набрать данные, было собрано ~2000 постов. После этого парсинг был поставлен в фоновую
+                задачу, чтобы постоянно обновлять данные (не более 100 постов по локации). Выполнение фоновых задач
+                осуществляется через Celery. Данные сохраняются в PostgreSQL. На момент отправки документа имеется 2128
+                постов.</p>
+            <p style="text-indent: 1.5em;">В перспективе для сбора большего количества данных, можно подключить парсинг данных из соц. сети
+                ВКонтакте через API (https://vk.com/dev/newsfeed.search).</p>
+
+            <h1 class="title has-text-centered" style="margin: 20px">Обработка данных</h1>
+            <p style="text-indent: 1.5em;">После сбора данные необходимо обработать. Для MVP было выбрано лишь одно направление - обработка текста.
+                В дальнейшем будет проводится тематическое моделирование, а также анализ фотографий. </p>
+            <p style="text-indent: 1.5em;">Обработка текста проходит в несколько этапов: форматирование текста через регулярное выражение, а после
+                все слова в тексте приводятся в начальную форму (pymorphy2 (https://pymorphy2.readthedocs.io)). Это
+                делается для наивной проверки на рекламные сообщения, т.е через стоп-слова. В дальнейшем, можно
+                применить методы машинного обучения для определения спам сообщений. </p>
+            <p style="text-indent: 1.5em;">Исходный текст проходит тональный анализ через NLTK (https://www.nltk.org/). Здесь возникает проблема с
+                тем, что NLTK действует лишь для англоязычных текстов, однако это легко исправить, воспользовавшись API
+                для работы с GoogleTranslator (https://cloud.google.com/translate/docs/apis). В связи с необходимостью
+                его использования, для устранения ошибок при выполнении программы, используется функция удаления
+                смайликов из текста, базирующаяся на библиотеке emoji (https://pypi.org/project/emoji/). Результат
+                анализа записывается в базу данных.</p>
+
+            <h1 class="title has-text-centered" style="margin: 20px">Отображение данных</h1>
+            <p style="text-indent: 1.5em;">После обработки данных, их необходимо предоставить пользователю платформы. </p>
+            <p style="text-indent: 1.5em;">Для этого был выбран WEB фреймворк Django. Это обусловлено несколькими причинами: проект легко
+                расширяется (поскольку представляется многомодульным, мы решили взять именно Django, а не Flask),
+                интеграция с Celery (при добавлении новой локации, нужно просто добавить задачу, аргументом которой
+                будет ID локации), легкость добавления представлений для работы API, основной язык разработки проекта -
+                Python. </p>
+            <p style="text-indent: 1.5em;">Для работы на клиентской стороне выбран JS (VueJS и библиотеки, для работы с картой, графиками).</p>
+
     </div>
-</section>
-<div class="container">
-    <h1 class="title">Цель</h1>
-Создать веб-платформу, с помощью которой можно отслеживать настроение жителей города путем семантического анализа текста, хэштегов и эмоциональной окраски фотографии в социальных сетях.
-Методика работы
-    <h1 class="title">Схема работы:</h1>
-    <ul>
-		<li>Парсинг данных из разных источников</li>
-		<li>Обработка данных</li>
-		<li>Проведение анализа</li>
-    <h1 class="title">Парсинг данных</h1>
-    <p>Это первый этап. На этом этапе мы собираем данные из социальных сетей для анализа. В ходе разработки наша команда выбрала для начала соц. сеть Instagram. Для работы с социальной сетью была выбрана библиотека Instaloader (https://instaloader.github.io/). </p>
-    <p>Изначально, чтобы набрать данные, было собрано ~2000 постов. После этого парсинг был поставлен в фоновую задачу, чтобы постоянно обновлять данные (не более 100 постов по локации). Выполнение фоновых задач осуществляется через Celery. Данные сохраняются в PostgreSQL. На момент отправки документа имеется 2128 постов.</p>
-    <p>В перспективе для сбора большего количества данных, можно подключить парсинг данных из соц. сети ВКонтакте через API (https://vk.com/dev/newsfeed.search).</p>
-    
-    <h1 class="title">Обработка данных</h1>
-    <p>После сбора данные необходимо обработать. Для MVP было выбрано лишь одно направление - обработка текста. В дальнейшем будет проводится тематическое моделирование, а также анализ фотографий. </p>
-    <p>Обработка текста проходит в несколько этапов: форматирование текста через регулярное выражение, а после все слова в тексте приводятся в начальную форму (pymorphy2 (https://pymorphy2.readthedocs.io)). Это делается для наивной проверки на рекламные сообщения, т.е через стоп-слова. В дальнейшем, можно применить методы машинного обучения для определения спам сообщений. </p>
-    <p>Исходный текст проходит тональный анализ через NLTK (https://www.nltk.org/). Здесь возникает проблема с тем, что NLTK действует лишь для англоязычных текстов, однако это легко исправить, воспользовавшись API для работы с GoogleTranslator (https://cloud.google.com/translate/docs/apis). В связи с необходимостью его использования, для устранения ошибок при выполнении программы, используется функция удаления смайликов из текста, базирующаяся на библиотеке emoji (https://pypi.org/project/emoji/). Результат анализа записывается в базу данных.</p>
-    
-    <h1 class="title">Отображение данных</h1>
-    <p>После обработки данных, их необходимо предоставить пользователю платформы. </p>
-    <p>Для этого был выбран WEB фреймворк Django. Это обусловлено несколькими причинами: проект легко расширяется (поскольку представляется многомодульным, мы решили взять именно Django, а не Flask), интеграция с Celery (при добавлении новой локации, нужно просто добавить задачу, аргументом которой будет ID локации), легкость добавления представлений для работы API, основной язык разработки проекта - Python. </p>
-    <p>Для работы на клиентской стороне выбран JS (VueJS и библиотеки, для работы с картой, графиками).</p>
-    
-</div>
 </body>
 </html>
