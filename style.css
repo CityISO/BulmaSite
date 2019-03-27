@@ -3,3 +3,11 @@
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+.card{
+    transition: 0.3s;
+}
+
+.card:hover{
+    transform: translate(0px, -5px);
+}
