@@ -1,3 +1,5 @@
+//Скрипт гистограммы
+
 google.charts.load('current', {'packages': ['corechart', 'bar']});
 google.charts.setOnLoadCallback(drawStuff);
 
@@ -14,7 +16,7 @@ function drawStuff() {
     ]);
 
     var materialOptions = {
-        width: 900,
+        width: 0.45 * screen.width,
         chart: {
             title: 'Уровень настроения в Екатеринбурге',
             subtitle: ''
@@ -37,3 +39,25 @@ function drawStuff() {
 
     drawMaterialChart();
 };
+
+// Скрипт круговой диаграммы
+
+google.charts.load('current', {'packages': ['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+function drawChart() {
+
+    var data = google.visualization.arrayToDataTable([
+        ['Все посты', 'Рекламные посты'],
+        ['Рекламные посты', 11],
+        ['Обычные посты', 2]
+    ]);
+
+    var options = {
+        title: 'Количество рекламных постов'
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+    chart.draw(data, options);
+}
