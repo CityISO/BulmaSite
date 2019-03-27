@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'Whitney';
+    src: url('Whitney-Book.eot');
+    src: url('Whitney-Book.eot?#iefix') format('embedded-opentype'),
+    url('Whitney-Book.woff') format('woff'),
+    url('Whitney-Book.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
